@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import { PageHeader, Button, Descriptions } from "antd";
-import { SearchForm } from "./Form.js";
+import Main from "./Main.js";
 import "./App.css";
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
           </Descriptions>
         </PageHeader>
       </div>
-      <SearchForm></SearchForm>
+      <Main></Main>
     </div>
   );
 };
