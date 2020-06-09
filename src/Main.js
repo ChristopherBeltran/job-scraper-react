@@ -71,6 +71,7 @@ export default class Main extends React.Component {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000",
         },
         body: JSON.stringify(bodyData),
       };
@@ -85,7 +86,7 @@ export default class Main extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Submitted");
+    this.apiRequest();
   };
 
   render() {
