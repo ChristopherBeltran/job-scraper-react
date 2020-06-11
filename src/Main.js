@@ -116,11 +116,12 @@ export default class Main extends React.Component {
         body: JSON.stringify(bodyData),
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3001",
+          "Access-Control-Allow-Origin":
+            "https://job-bot-scraper.herokuapp.com",
         },
       };
       const fetchResponse = await fetch(
-        `http://localhost:3000/api/v1/scraper`,
+        `https://job-bot-scraper-api.herokuapp.com/api/v1/scraper`,
         settings
       );
       const data = await fetchResponse.json();
