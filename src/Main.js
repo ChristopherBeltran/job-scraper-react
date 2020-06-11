@@ -33,6 +33,7 @@ export default class Main extends React.Component {
         datePosted: "",
         sortBy: "",
       },
+      formErrors: [],
     };
   }
 
@@ -93,7 +94,11 @@ export default class Main extends React.Component {
       for (const obj of data[i].data) {
         let newObj = {};
         newObj["company"] = obj.attributes.company;
-        newObj["link"] = obj.attributes.link;
+        if (obj.attributes.source === "Indeed") {
+          newObj["link"] = `https://indeed.com${obj.attributes.link}`;
+        } else {
+          newObj["link"] = obj.attributes.link;
+        }
         newObj["location"] = obj.attributes.location;
         newObj["position"] = obj.attributes.position;
         newObj["source"] = obj.attributes.source;
@@ -109,9 +114,13 @@ export default class Main extends React.Component {
       const settings = {
         method: "POST",
         body: JSON.stringify(bodyData),
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+        },
       };
       const fetchResponse = await fetch(
-        `https://job-bot-scraper-api.herokuapp.com/api/v1/scraper`,
+        `http://localhost:3000/api/v1/scraper`,
         settings
       );
       const data = await fetchResponse.json();
@@ -136,6 +145,51 @@ export default class Main extends React.Component {
     event.preventDefault();
     this.handleLoading();
     this.apiRequest();
+  };
+
+  handleJobTitleValidation = () => {
+    const format = new RegExp("^[a-zA-Z-][a-zA-Z -]*$/i");
+
+    if (this.state.formData.jobTitle === "") {
+      return "Job Title cannot be blank!";
+    }
+
+    if (!format.test(this.state.formData.jobTitle)) {
+      return "Job Title must only contain alphabet characters!";
+    }
+  };
+  handleLocationFieldValidation = (value) => {
+    const format = new RegExp("^[a-zA-Z]*, ?[a-zA-Z]*/i");
+  };
+
+  handleFormValidation = () => {
+    const job = this.handleJobTitleValidation(this.state.formData.jobTitle);
+    const location = this.handleLocationFieldValidation(
+      this.state.formData.location
+    );
+  };
+
+  handleTableButton = (event) => {
+    event.preventDefault();
+    this.setState({
+      loading: false,
+      results: {
+        complete: false,
+        data: {},
+      },
+      form: true,
+      formData: {
+        jobTitle: "",
+        location: "",
+        linkedIn: false,
+        glassdoor: false,
+        indeed: false,
+        dice: false,
+        datePosted: "",
+        sortBy: "",
+      },
+      formErrors: [],
+    });
   };
 
   render() {
@@ -276,7 +330,7 @@ export default class Main extends React.Component {
         <div className="loading-spinner">
           <Title level={2}>
             Fetching "{this.state.formData.jobTitle}" jobs in "
-            {this.state.formData.location}", this may take a few minutes
+            {this.state.formData.location}", this may take a few minutes...
           </Title>
           <br></br>
           <Spin size="large" />
@@ -288,6 +342,7 @@ export default class Main extends React.Component {
           results={this.state.results.data}
           jobTitle={this.state.formData.jobTitle}
           location={this.state.formData.location}
+          handleTableButton={this.handleTableButton}
         ></ResultsTable>
       );
     }

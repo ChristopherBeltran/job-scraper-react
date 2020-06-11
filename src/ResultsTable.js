@@ -3,7 +3,7 @@ import { Table, Tag, Space, Button } from "antd";
 
 const ResultsTable = (props) => {
   console.log(props);
-  const { results, jobTitle, location } = props;
+  const { results, jobTitle, location, handleTableButton } = props;
 
   const colorHandler = (source) => {
     var color = "";
@@ -29,11 +29,29 @@ const ResultsTable = (props) => {
       title: "Job Title",
       dataIndex: "position",
       key: "position",
+      sorter: (a, b) => {
+        if (a.position < b.position) {
+          return -1;
+        }
+        if (a.position > b.position) {
+          return 1;
+        }
+        return 0;
+      },
     },
     {
       title: "Company",
       dataIndex: "company",
       key: "company",
+      sorter: (a, b) => {
+        if (a.company < b.company) {
+          return -1;
+        }
+        if (a.company > b.company) {
+          return 1;
+        }
+        return 0;
+      },
     },
     {
       title: "Location",
@@ -77,7 +95,9 @@ const ResultsTable = (props) => {
       render: (text, link) => (
         <Space size="middle">
           <Button type="primary" shape="round" size="large">
-            <a href={text}>Apply</a>
+            <a href={text} target="_blank">
+              Apply
+            </a>
           </Button>
         </Space>
       ),
@@ -90,7 +110,18 @@ const ResultsTable = (props) => {
       dataSource={results}
       bordered
       title={() => `Showing results for "${jobTitle}" in ${location}`}
-      footer={() => "Run another search"}
+      footer={() => {
+        return (
+          <Button
+            type="primary"
+            size="large"
+            htmlType="submit"
+            onClick={(event) => handleTableButton(event)}
+          >
+            Run Another Search
+          </Button>
+        );
+      }}
     />
   );
 };
