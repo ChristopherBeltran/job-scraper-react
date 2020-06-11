@@ -161,7 +161,11 @@ export default class Main extends React.Component {
               Enter search criteria and select sources to put Job Bot to work{" "}
             </Title>{" "}
             <br></br>
-            <Form.Item label="Job Title" className="form-labels">
+            <Form.Item
+              label="Job Title"
+              className="form-labels"
+              justify="center"
+            >
               <Input
                 placeholder="Software Engineer"
                 name="jobTitle"
@@ -169,7 +173,11 @@ export default class Main extends React.Component {
                 className="text-input-fields"
               />
             </Form.Item>{" "}
-            <Form.Item label="City, State" className="form-labels">
+            <Form.Item
+              label="City, State"
+              className="form-labels"
+              justify="center"
+            >
               <Input
                 name="location"
                 placeholder="Los Angeles, CA"
@@ -177,28 +185,36 @@ export default class Main extends React.Component {
                 className="text-input-fields"
               />
             </Form.Item>{" "}
-            <Form.Item label="LinkedIn" className="form-labels">
+            <Form.Item
+              label="LinkedIn"
+              className="form-labels"
+              justify="center"
+            >
               <Switch
                 name="linkedIn"
                 checked={this.state.formData.linkedIn}
                 onChange={(checked, event) => this.handleSwitch(event)}
               />
             </Form.Item>{" "}
-            <Form.Item label="Glassdoor" className="form-labels">
+            <Form.Item
+              label="Glassdoor"
+              className="form-labels"
+              justify="center"
+            >
               <Switch
                 name="glassdoor"
                 checked={this.state.formData.glassdoor}
                 onChange={(checked, event) => this.handleSwitch(event)}
               />
             </Form.Item>{" "}
-            <Form.Item label="Indeed" className="form-labels">
+            <Form.Item label="Indeed" className="form-labels" justify="center">
               <Switch
                 name="indeed"
                 checked={this.state.formData.indeed}
                 onChange={(checked, event) => this.handleSwitch(event)}
               />
             </Form.Item>{" "}
-            <Form.Item label="Dice" className="form-labels">
+            <Form.Item label="Dice" className="form-labels" justify="center">
               <Switch
                 name="dice"
                 checked={this.state.formData.dice}
@@ -209,6 +225,7 @@ export default class Main extends React.Component {
               name="date-posted"
               label="Date Posted"
               className="form-labels"
+              justify="center"
             >
               <Radio.Group
                 onChange={(event) => this.handleRadio(event)}
@@ -219,7 +236,12 @@ export default class Main extends React.Component {
                 <Radio.Button value="Past 7 Days"> Past 7 Days </Radio.Button>{" "}
               </Radio.Group>{" "}
             </Form.Item>{" "}
-            <Form.Item name="sort-by" label="Sort By" className="form-labels">
+            <Form.Item
+              name="sort-by"
+              label="Sort By"
+              className="form-labels"
+              justify="center"
+            >
               <Radio.Group
                 onChange={(event) => this.handleRadio(event)}
                 name="sortBy"
@@ -234,17 +256,18 @@ export default class Main extends React.Component {
                 </Radio.Button>{" "}
               </Radio.Group>{" "}
             </Form.Item>{" "}
-            <Button
-              size="large"
-              type="primary"
-              htmlType="submit"
-              justify="center"
-              id="submit-button"
-              onClick={(event) => this.handleSubmit(event)}
-            >
-              {" "}
-              SUBMIT{" "}
-            </Button>{" "}
+            <Form.Item padding="10px" justify="center">
+              <Button
+                size="large"
+                type="primary"
+                htmlType="submit"
+                id="submit-button"
+                onClick={(event) => this.handleSubmit(event)}
+              >
+                {" "}
+                SUBMIT{" "}
+              </Button>{" "}
+            </Form.Item>
           </Form>{" "}
         </div>
       );
