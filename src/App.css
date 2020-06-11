@@ -10,6 +10,8 @@
 #submit-button {
   width: 35%;
   font-weight: bold;
+  margin-left: 22%;
+  margin-right: 30%;
 }
 
 .text-input-fields {
@@ -29,5 +31,8 @@
 }
 
 .ant-table-title {
+  font-weight: bold;
+}
+.ant-descriptions-item-label {
   font-weight: bold;
 }

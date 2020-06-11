@@ -108,14 +108,10 @@ export default class Main extends React.Component {
       const bodyData = this.state.formData;
       const settings = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-        },
         body: JSON.stringify(bodyData),
       };
       const fetchResponse = await fetch(
-        `http://localhost:3000/api/v1/scraper`,
+        `https://job-bot-scraper-api.herokuapp.com/api/v1/scraper`,
         settings
       );
       const data = await fetchResponse.json();
