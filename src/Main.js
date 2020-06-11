@@ -1,14 +1,27 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Radio, Switch, Typography } from "antd";
-import { FormContext } from "antd/lib/form/context";
-import { render } from "react-dom";
+import {
+  Form,
+  Input,
+  Button,
+  Radio,
+  Switch,
+  Typography,
+  Spin,
+  Row,
+  Col,
+} from "antd";
+import ResultsTable from "./ResultsTable";
 
 export default class Main extends React.Component {
   constructor(props) {
     super(props);
     //  use this to make the card to appear after the page has been rendered
     this.state = {
-      results: false,
+      loading: false,
+      results: {
+        complete: false,
+        data: {},
+      },
       form: true,
       formData: {
         jobTitle: "",
@@ -51,7 +64,6 @@ export default class Main extends React.Component {
   };
 
   handleRadio = (event) => {
-    console.log(event);
     const radioType = event.target.name;
     const selection = event.target.value;
     this.setState({
@@ -62,6 +74,33 @@ export default class Main extends React.Component {
         [radioType]: selection,
       },
     });
+  };
+
+  handleLoading = () => {
+    this.setState({
+      loading: true,
+      results: this.state.results,
+      form: false,
+      formData: {
+        ...this.state.formData,
+      },
+    });
+  };
+
+  formatData = (data) => {
+    const formattedArr = [];
+    for (var i = 0; i < data.length; i++) {
+      for (const obj of data[i].data) {
+        let newObj = {};
+        newObj["company"] = obj.attributes.company;
+        newObj["link"] = obj.attributes.link;
+        newObj["location"] = obj.attributes.location;
+        newObj["position"] = obj.attributes.position;
+        newObj["source"] = obj.attributes.source;
+        formattedArr.push(newObj);
+      }
+    }
+    return formattedArr;
   };
 
   apiRequest = async () => {
@@ -80,12 +119,26 @@ export default class Main extends React.Component {
         settings
       );
       const data = await fetchResponse.json();
-      console.log(data);
-    } catch (e) {}
+      const formatted = this.formatData(data);
+      this.setState({
+        loading: false,
+        results: {
+          complete: true,
+          data: formatted,
+        },
+        form: false,
+        formData: {
+          ...this.state.formData,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    this.handleLoading();
     this.apiRequest();
   };
 
@@ -111,6 +164,7 @@ export default class Main extends React.Component {
             <Title level={3} justify="center">
               Enter search criteria and select sources to put Job Bot to work{" "}
             </Title>{" "}
+            <br></br>
             <Form.Item label="Job Title" className="form-labels">
               <Input
                 placeholder="Software Engineer"
@@ -198,8 +252,25 @@ export default class Main extends React.Component {
           </Form>{" "}
         </div>
       );
-    } else if (this.state.results) {
-      return <div className="results"></div>;
+    } else if (this.state.loading) {
+      return (
+        <div className="loading-spinner">
+          <Title level={2}>
+            Fetching "{this.state.formData.jobTitle}" jobs in "
+            {this.state.formData.location}", this may take a few minutes
+          </Title>
+          <br></br>
+          <Spin size="large" />
+        </div>
+      );
+    } else if (this.state.results.complete) {
+      return (
+        <ResultsTable
+          results={this.state.results.data}
+          jobTitle={this.state.formData.jobTitle}
+          location={this.state.formData.location}
+        ></ResultsTable>
+      );
     }
   }
 }
