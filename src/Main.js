@@ -241,7 +241,7 @@ export default class Main extends React.Component {
               />
             </Form.Item>{" "}
             <Form.Item
-              label="LinkedIn"
+              label="LinkedIn (Currently Disabled)"
               className="form-labels"
               justify="center"
             >
@@ -249,6 +249,7 @@ export default class Main extends React.Component {
                 name="linkedIn"
                 checked={this.state.formData.linkedIn}
                 onChange={(checked, event) => this.handleSwitch(event)}
+                disabled={true}
               />
             </Form.Item>{" "}
             <Form.Item
