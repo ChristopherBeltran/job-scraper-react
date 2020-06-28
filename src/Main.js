@@ -123,7 +123,7 @@ export default class Main extends React.Component {
       const key = Object.keys(source);
       if (source[key[0]]) {
         const fetchResponse = await fetch(
-          `http://localhost:3000/api/v1/${key[0]}`,
+          `https://job-bot-scraper-api.herokuapp.com/api/v1/${key[0]}`,
           requestSettings
         );
         const res = await fetchResponse.json();
