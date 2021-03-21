@@ -157,7 +157,8 @@ export default class Main extends React.Component {
         body: JSON.stringify(bodyData),
         headers: {
           "Content-Type": "application/json",
-          //"Access-Control-Allow-Origin": "https://localhost:3001",
+          "Access-Control-Allow-Origin":
+            "https://job-bot-scraper.herokuapp.com",
         },
       };
       this.endpointHandler(settings);
