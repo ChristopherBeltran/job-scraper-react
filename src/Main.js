@@ -267,7 +267,6 @@ export default class Main extends React.Component {
                 name="linkedIn"
                 checked={this.state.formData.linkedIn}
                 onChange={(checked, event) => this.handleSwitch(event)}
-                disabled={true}
               />
             </Form.Item>{" "}
             <Form.Item
@@ -279,7 +278,6 @@ export default class Main extends React.Component {
                 name="glassdoor"
                 checked={this.state.formData.glassdoor}
                 onChange={(checked, event) => this.handleSwitch(event)}
-                disabled={true}
               />
             </Form.Item>{" "}
             <Form.Item label="Indeed" className="form-labels" justify="center">
