@@ -114,6 +114,7 @@ export default class Main extends React.Component {
     const sources = [];
     const data = [];
 
+    //TODO: Need to refactor to add logic to hit new polling endpoints and fetch results when ready
     sources.push({ linkedin: this.state.formData.linkedIn });
     sources.push({ glassdoor: this.state.formData.glassdoor });
     sources.push({ indeed: this.state.formData.indeed });
@@ -268,6 +269,7 @@ export default class Main extends React.Component {
                 name="linkedIn"
                 checked={this.state.formData.linkedIn}
                 onChange={(checked, event) => this.handleSwitch(event)}
+                disabled={true}
               />
             </Form.Item>{" "}
             <Form.Item
@@ -279,6 +281,7 @@ export default class Main extends React.Component {
                 name="glassdoor"
                 checked={this.state.formData.glassdoor}
                 onChange={(checked, event) => this.handleSwitch(event)}
+                disabled={true}
               />
             </Form.Item>{" "}
             <Form.Item label="Indeed" className="form-labels" justify="center">
